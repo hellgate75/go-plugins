@@ -20,7 +20,7 @@ type SeekRequest struct {
 var proxyVia proxy.Proxy = nil
 
 // Load plugins from the modules folder
-func GetPlugins() ([]*model.Plugin, error) {
+func GetPlugins() ([]model.Plugin, error) {
 	var errGlobal error = nil
 	defer func() {
 		if r := recover(); r != nil {
@@ -38,7 +38,7 @@ func GetPlugins() ([]*model.Plugin, error) {
 	return proxyVia.GetPlugins(), errGlobal
 }
 
-func SeekForPlugins(pluginType model.PluginType) ([]*model.Plugin, error) {
+func SeekForPlugins(pluginType model.PluginType) ([]model.Plugin, error) {
 	var errGlobal error = nil
 	defer func() {
 		if r := recover(); r != nil {
@@ -53,7 +53,7 @@ func SeekForPlugins(pluginType model.PluginType) ([]*model.Plugin, error) {
 	if proxyVia == nil {
 		proxyVia = proxy.NewProxy()
 	}
-	var out = make([]*model.Plugin, 0)
+	var out = make([]model.Plugin, 0)
 	plugins, err := proxyVia.GetPluginsByType(pluginType)
 	if err == nil {
 		out = append(out, plugins...)
@@ -67,7 +67,7 @@ func SeekForPlugins(pluginType model.PluginType) ([]*model.Plugin, error) {
 	return out, errGlobal
 }
 
-func FilteredPluginsByType(pluginType model.PluginType, filter func(model.Plugin) bool) ([]*model.Plugin, error) {
+func FilteredPluginsByType(pluginType model.PluginType, filter func(model.Plugin) bool) ([]model.Plugin, error) {
 	var errGlobal error = nil
 	defer func() {
 		if r := recover(); r != nil {
@@ -79,13 +79,13 @@ func FilteredPluginsByType(pluginType model.PluginType, filter func(model.Plugin
 			errGlobal = errors.New(fmt.Sprintf("%v", r))
 		}
 	}()
-	var out = make([]*model.Plugin, 0)
+	var out = make([]model.Plugin, 0)
 	plugins, err := SeekForPlugins(pluginType)
 	if err != nil {
 		return out, err
 	}
 	for _, p := range plugins {
-		if filter(*p) {
+		if filter(p) {
 			out = append(out, p)
 		}
 	}
@@ -95,7 +95,7 @@ func FilteredPluginsByType(pluginType model.PluginType, filter func(model.Plugin
 	return out, errGlobal
 }
 
-func FilteredPlugins(filter func(model.Plugin) bool) ([]*model.Plugin, error) {
+func FilteredPlugins(filter func(model.Plugin) bool) ([]model.Plugin, error) {
 	var errGlobal error = nil
 	defer func() {
 		if r := recover(); r != nil {
@@ -107,12 +107,12 @@ func FilteredPlugins(filter func(model.Plugin) bool) ([]*model.Plugin, error) {
 			errGlobal = errors.New(fmt.Sprintf("%v", r))
 		}
 	}()
-	var out = make([]*model.Plugin, 0)
+	var out = make([]model.Plugin, 0)
 	if proxyVia == nil {
 		proxyVia = proxy.NewProxy()
 	}
 	for _, p := range proxyVia.GetPlugins() {
-		if filter(*p) {
+		if filter(p) {
 			out = append(out, p)
 		}
 	}

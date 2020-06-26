@@ -17,10 +17,13 @@ var UsePlugins = false
 
 // Use custom plugins loading proxies
 var ForcePluginsReload = false
+
 // Use custom plugins folder to seek for libraries
 var BaseAppFolder = ""
+
 // Plugin Modules sub folder name
 var PluginsModulesFolder = "modules"
+
 // Assume this extension name for ;loading the libraries (we hope in future windows will allow plugins)
 var PluginLibrariesExtension = "so"
 
@@ -30,20 +33,20 @@ var Logger log.Logger
 // Define Behaviors of a Proxy Component
 type Proxy interface {
 	// Get all available plugins loaded from shared / static libraries
-	GetPlugins() []*model.Plugin
+	GetPlugins() []model.Plugin
 	// Get available plugins of a specific plugin type
-	GetPluginsByType(pt model.PluginType) ([]*model.Plugin, error)
+	GetPluginsByType(pt model.PluginType) ([]model.Plugin, error)
 	// Get available plugins of a specific plugin type, filtered by user defined function
-	GetFilteredPluginsByType(pt model.PluginType, filter func(model.Plugin) bool) ([]*model.Plugin, error)
+	GetFilteredPluginsByType(pt model.PluginType, filter func(model.Plugin) bool) ([]model.Plugin, error)
 	// Get available plugins filtered by user defined function
-	GetFilteredPlugins(filter func(model.Plugin) bool) ([]*model.Plugin, error)
+	GetFilteredPlugins(filter func(model.Plugin) bool) ([]model.Plugin, error)
 }
 
 // Collects plugins once from proxy and return the list
 // It required in the libraries the presence of method 'GetPluginProxy'
 // that return the model.PluginProxy object
 func getPlugins() []model.Plugin {
-	if len(pluginDataList) > 0 && ! ForcePluginsReload {
+	if len(pluginDataList) > 0 && !ForcePluginsReload {
 		return pluginDataList
 	} else {
 		pluginDataList = make([]model.Plugin, 0)
@@ -67,7 +70,7 @@ func filterByExtension(fileName string) bool {
 	n := len(PluginLibrariesExtension)
 	fileNameLen := len(fileName)
 	posix := fileNameLen - n - 1
-	return posix > 0 && strings.ToLower(fileName[posix:]) == strings.ToLower("." + PluginLibrariesExtension)
+	return posix > 0 && strings.ToLower(fileName[posix:]) == strings.ToLower("."+PluginLibrariesExtension)
 }
 
 // Lists all library files in a given folder path
@@ -77,7 +80,7 @@ func listLibrariesInFolder(dirName string) []string {
 	if err0 == nil {
 		lst, err1 := ioutil.ReadDir(dirName)
 		if err1 == nil {
-			for _,file := range lst {
+			for _, file := range lst {
 				if file.IsDir() {
 					fullDirPath := dirName + string(os.PathSeparator) + file.Name()
 					newList := listLibrariesInFolder(fullDirPath)
@@ -86,7 +89,7 @@ func listLibrariesInFolder(dirName string) []string {
 					if filterByExtension(file.Name()) {
 						fullFilePath := dirName + string(os.PathSeparator) + file.Name()
 						out = append(out, fullFilePath)
-						
+
 					}
 				}
 			}
@@ -96,13 +99,13 @@ func listLibrariesInFolder(dirName string) []string {
 }
 
 // Recovers plugins and submits plugins to given callback function
-func forEachPluginDo(callback func([]model.Plugin)())  {
+func forEachPluginDo(callback func([]model.Plugin)) {
 	var pluginsList = make([]model.Plugin, 0)
 	dirName := getDefaultPluginsFolder()
 	_, err0 := os.Stat(dirName)
 	if err0 == nil {
 		libraries := listLibrariesInFolder(dirName)
-		for _,libraryFullPath := range libraries {
+		for _, libraryFullPath := range libraries {
 			if Logger != nil {
 				Logger.Debugf("modules.proxy.forEachSenderInPlugins() -> Loading help from library: %s", libraryFullPath)
 			}
@@ -159,7 +162,7 @@ func InitPlugins(config model.PluginsConfig, logger log.Logger) {
 // Calculates the plugins module folder
 func getDefaultPluginsFolder() string {
 	if strings.TrimSpace(BaseAppFolder) != "" {
-		return filepath.Dir(strings.TrimSpace(BaseAppFolder ))
+		return filepath.Dir(strings.TrimSpace(BaseAppFolder))
 	}
 	execPath, err := os.Executable()
 	if err != nil {
