@@ -1,7 +1,7 @@
 # go-plugins
 Plugins management library, it allows to manage plugins and plugins loading.
 
-As library it requires to be imported as :
+As library it requires to be imported as following code sample:
 ```
 import (
     plugins log "github.com/myaccount/myproject/myloggerpackage"
