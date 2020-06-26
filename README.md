@@ -12,6 +12,7 @@ As library it requires to be imported as following code sample:
 import (
     plugins log "github.com/myaccount/myproject/myloggerpackage"
     plugins "github.com/hellgate75/go-plugins"
+    "github.com/hellgate75/go-plugins/model"
     "fmt"
 )
 
