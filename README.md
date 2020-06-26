@@ -26,8 +26,8 @@ func init() {
 
 // Collects and count plugins
 func main() {
-    var pliuginsList = plgins.GetPlugins()
-    fmt.Printf("Loaded %v plugins", len(pliuginsList))
+    var pluginsList = plgins.GetPlugins()
+    fmt.Printf("Loaded %v plugins", len(pluginsList))
 }
 
 ```
