@@ -1,3 +1,6 @@
+<p align="right" style="width: 100%">
+![Go](https://github.com/hellgate75/go-plugins/workflows/Go/badge.svg?branch=master) &nbsp; &nbsp;
+</p>
 # go-plugins
 Plugins management library, it allows to manage plugins and plugins loading.
 
