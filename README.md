@@ -39,7 +39,7 @@ You need to implement in the library the method ```GetProxyStub()```  it must re
 
 Main methods are present in this file:
 
-* [/go-plugins.go](/go-plugins.go)
+* [go-plugins.go](/go-plugins.go)
 
 Mandatory method is ```EnablePlugins```. 
 
@@ -57,7 +57,7 @@ go build -buildmode=shared github.com/hellgate75/go-plugins
 ## Test the project
 
 ```
-go test -v github.com/hellgate75/go-lugins/...
+go test -v github.com/hellgate75/go-plugins/...
 ```
 
 Enjoy the experience.
