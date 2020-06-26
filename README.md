@@ -1,6 +1,9 @@
-<p align="right" style="width: 100%">
+<div style="width: 100% !important; align: right;">
+
 ![Go](https://github.com/hellgate75/go-plugins/workflows/Go/badge.svg?branch=master) &nbsp; &nbsp;
-</p>
+
+</div>
+
 # go-plugins
 Plugins management library, it allows to manage plugins and plugins loading.
 
