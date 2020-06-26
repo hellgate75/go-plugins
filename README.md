@@ -27,10 +27,12 @@ func init() {
 
 // Collects and count plugins
 func main() {
-    pluginsList err := plugins.GetAllPlugins()
+    pluginsList, err := plugins.GetAllPlugins()
     if err != nil {
+        // An error is occurred during plugins load ...
         fmt.Printf("Error occured during plugins load: %v\n", err)
     } else {
+        // Plugins are loaded correctly ...
         fmt.Printf("Loaded %v plugins\n", len(pluginsList))
     }
 }
