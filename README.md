@@ -1,6 +1,31 @@
 # go-plugins
 Plugins management library, it allows to manage plugins and plugins loading.
 
+As library it requires to be imported as :
+```
+import (
+    plugins log "github.com/myaccount/myproject/myloggerpackage"
+    plugins "github.com/hellgate75/go-plugins"
+    "fmt"
+)
+
+// Enables the plugins.
+func init() {
+    var myLogger = log.New()
+    plugins.EnablePlugins(model.PluginsConfig{
+        "my-root-folder",
+        true
+    }, myLogger)
+}
+
+// Collects and count plugins
+func main() {
+    var pliuginsList = plgins.GetPlugins()
+    fmt.Printf("Loaded %v plugins", len(pliuginsList))
+}
+
+```
+
 You need to implement in the library the method ```GetProxyStub()```  it must return an element of type 
 ``` model.ProxyStub```. Any plugin can be of different type and model information can be found here:
 
